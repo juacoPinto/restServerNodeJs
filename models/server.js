@@ -2,6 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("../routes/user.routes");
+const authRoute = require("../routes/auth.routes");
+const categoriasRoute = require("../routes/categorias.routes");
+const productosRoute = require("../routes/productos.routes");
+const buscarRoute = require("../routes/buscar.routes");
 const dbConnection = require("../database/config");
 
 class Server {
@@ -11,6 +15,10 @@ class Server {
 		this.port = process.env.PORT;
 		//definicion de rutas
 		this.usuariosPath = "/api/usuarios";
+		this.authPath = "/api/auth";
+		this.categoriasPath = "/api/categorias";
+		this.productosPath = "/api/productos";
+		this.buscarPath = "/api/buscar";
 		//Conectar a Base de Datos
 		this.conectarDB();
 		//middlewares
@@ -33,6 +41,10 @@ class Server {
 
 	routes() {
 		this.app.use(this.usuariosPath, userRoutes);
+		this.app.use(this.authPath, authRoute);
+		this.app.use(this.categoriasPath, categoriasRoute);
+		this.app.use(this.productosPath, productosRoute);
+		this.app.use(this.buscarPath, buscarRoute);
 	}
 	listen() {
 		this.app.listen(this.port, () => {
